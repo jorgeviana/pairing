@@ -32,4 +32,15 @@ public class GreetingServiceTest {
                 .isEqualTo(new Greet("I saw you before, Dorothy"));
     }
 
+    @Test
+    void should_say_hello_to_two_different_persons(){
+        given(userRepository.findByName("Dorothy")).willReturn(new User("Dorothy"));
+        given(userRepository.findByName("Alice")).willReturn(null);
+
+        greetingService.hello("Dorothy");
+
+        assertThat(greetingService.hello("Alice"))
+                .isEqualTo(new Greet("Hello Alice, good morning"));
+    }
+
 }
